@@ -12,7 +12,7 @@ void _queue(stk_t **doubly, unsigned int cline)
 	(void)doubly;
 	(void)cline;
 
-	glovar.lifo = 0;
+	vglo.lifo = 0;
 }
 
 /**
@@ -27,7 +27,7 @@ void _stack(stk_t **doubly, unsigned int cline)
 	(void)doubly;
 	(void)cline;
 
-	glovar.lifo = 1;
+	vglo.lifo = 1;
 }
 
 /**
@@ -49,7 +49,7 @@ void _add(stk_t **doubly, unsigned int cline)
 
 	if (m < 2)
 	{
-		vprintf(2, "L%u: can't add, stack too short\n", cline);
+		dprintf(2, "L%u: can't add, stack too short\n", cline);
 		free_vglo();
 		exit(EXIT_FAILURE);
 	}
@@ -91,7 +91,7 @@ void _sub(stk_t **doubly, unsigned int cline)
 
 	if (m < 2)
 	{
-		vprintf(2, "L%u: can't sub, stack too short\n", cline);
+		dprintf(2, "L%u: can't sub, stack too short\n", cline);
 		free_vglo();
 		exit(EXIT_FAILURE);
 	}

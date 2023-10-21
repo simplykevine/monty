@@ -6,17 +6,16 @@
  *@n: data to store
  *Return: a doubly linked list
  */
- 
-stk_t *add_dnodeint_end(stk_t **head, const int n)
+stack_t *add_dnodeint_end(stack_t **head, const int n)
 {
-	stk_t *temp, *aux;
+	stack_t *temp, *aux;
 
 	if (head == NULL)
 		return (NULL);
-	temp = malloc(sizeof(stk_t));
+	temp = malloc(sizeof(stack_t));
 	if (!temp)
 	{
-		vprintf(2, "Error: malloc failed\n");
+		dprintf(2, "Error: malloc failed\n");
 		free_vglo();
 		exit(EXIT_FAILURE);
 	}
@@ -44,13 +43,13 @@ stk_t *add_dnodeint_end(stk_t **head, const int n)
  *@n: data to store
  *Return: a doubly linked list
  */
-stk_t *add_dnodeint(stk_t **head, const int n)
+stack_t *add_dnodeint(stack_t **head, const int n)
 {
-	stk_t *temp;
+	stack_t *temp;
 
 	if (head == NULL)
 		return (NULL);
-	temp = malloc(sizeof(stk_t));
+	temp = malloc(sizeof(stack_t));
 	if (!temp)
 	{
 		dprintf(2, "Error: malloc failed\n");
@@ -79,9 +78,9 @@ stk_t *add_dnodeint(stk_t **head, const int n)
  * @head: head of the list
  * Return: no return
  */
-void free_dlistint(stk_t *head)
+void free_dlistint(stack_t *head)
 {
-	stk_t *tmp;
+	stack_t *tmp;
 
 	while ((tmp = head) != NULL)
 	{

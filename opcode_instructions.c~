@@ -11,28 +11,28 @@ void _push(stk_t **doubly, unsigned int cline)
 {
 	int n, j;
 
-	if (!glovar.arg)
+	if (!vglo.arg)
 	{
-		vprintf(2, "L%u: ", cline);
-		vprintf(2, "usage: push integer\n");
+		dprintf(2, "L%u: ", cline);
+		dprintf(2, "usage: push integer\n");
 		free_vglo();
 		exit(EXIT_FAILURE);
 	}
 
-	for (j = 0; glovar.arg[j] != '\0'; j++)
+	for (j = 0; vglo.arg[j] != '\0'; j++)
 	{
-		if (!isdigit(glovar.arg[j]) && glovar.arg[j] != '-')
+		if (!isdigit(vglo.arg[j]) && vglo.arg[j] != '-')
 		{
-			vprintf(2, "L%u: ", cline);
-			vprintf(2, "usage: push integer\n");
+			dprintf(2, "L%u: ", cline);
+			dprintf(2, "usage: push integer\n");
 			free_vglo();
 			exit(EXIT_FAILURE);
 		}
 	}
 
-	n = atoi(glovar.arg);
+	n = atoi(vglo.arg);
 
-	if (glovar.lifo == 1)
+	if (vglo.lifo == 1)
 		add_dnodeint(doubly, n);
 	else
 		add_dnodeint_end(doubly, n);
@@ -54,7 +54,7 @@ void _pall(stk_t **doubly, unsigned int cline)
 
 	while (aux)
 	{
-		vprintf("%d\n", aux->n);
+		printf("%d\n", aux->n);
 		aux = aux->next;
 	}
 }
@@ -72,8 +72,8 @@ void _pint(stk_t **doubly, unsigned int cline)
 
 	if (*doubly == NULL)
 	{
-		vprintf(2, "L%u: ", cline);
-		vprintf(2, "can't pint, stack empty\n");
+		dprintf(2, "L%u: ", cline);
+		dprintf(2, "can't pint, stack empty\n");
 		free_vglo();
 		exit(EXIT_FAILURE);
 	}
@@ -94,7 +94,7 @@ void _pop(stk_t **doubly, unsigned int cline)
 
 	if (doubly == NULL || *doubly == NULL)
 	{
-		vprintf(2, "L%u: can't pop an empty stack\n", cline);
+		dprintf(2, "L%u: can't pop an empty stack\n", cline);
 		free_vglo();
 		exit(EXIT_FAILURE);
 	}
@@ -122,7 +122,7 @@ void _swap(stk_t **doubly, unsigned int cline)
 
 	if (m < 2)
 	{
-		vprintf(2, "L%u: can't swap, stack too short\n", cline);
+		dprintf(2, "L%u: can't swap, stack too short\n", cline);
 		free_vglo();
 		exit(EXIT_FAILURE);
 	}

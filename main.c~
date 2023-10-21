@@ -1,6 +1,6 @@
 #include "monty.h"
 
-global_t glovar;
+global_t vglo;
 
 /**
  * free_vglo - frees the global variables
@@ -9,9 +9,9 @@ global_t glovar;
  */
 void free_vglo(void)
 {
-	free_dlistint(glovar.head);
-	free(glovar.buffer);
-	fclose(glovar.fd);
+	free_dlistint(vglo.head);
+	free(vglo.buffer);
+	fclose(vglo.fd);
 }
 
 /**
@@ -22,12 +22,12 @@ void free_vglo(void)
  */
 void start_vglo(FILE *fd)
 {
-	glovar.lifo = 1;
-	glovar.cont = 1;
-	glovar.arg = NULL;
-	glovar.head = NULL;
-	glovar.fd = fd;
-	glovar.buffer = NULL;
+	vglo.lifo = 1;
+	vglo.cont = 1;
+	vglo.arg = NULL;
+	vglo.head = NULL;
+	vglo.fd = fd;
+	vglo.buffer = NULL;
 }
 
 /**
@@ -44,7 +44,7 @@ FILE *check_input(int argc, char *argv[])
 
 	if (argc == 1 || argc > 2)
 	{
-		vprintf(2, "USAGE: monty file\n");
+		dprintf(2, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -52,7 +52,7 @@ FILE *check_input(int argc, char *argv[])
 
 	if (fd == NULL)
 	{
-		vprintf(2, "Error: Can't open file %s\n", argv[1]);
+		dprintf(2, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 
@@ -76,24 +76,25 @@ int main(int argc, char *argv[])
 
 	fd = check_input(argc, argv);
 	start_vglo(fd);
-	nlines = getline(&glovar.buffer, &size, fd);
+	nlines = getline(&vglo.buffer, &size, fd);
 	while (nlines != -1)
 	{
-		lines[0] = _strtoky(glovar.buffer, " \t\n");
+		lines[0] = _strtoky(vglo.buffer, " \t\n");
 		if (lines[0] && lines[0][0] != '#')
 		{
 			f = get_opcodes(lines[0]);
 			if (!f)
 			{
-				vprintf(2, "L%u: ", glovar.cont);
-				vprintf(2, "unknown instruction %s\n", lines[0]);
+				dprintf(2, "L%u: ", vglo.cont);
+				dprintf(2, "unknown instruction %s\n", lines[0]);
 				free_vglo();
 				exit(EXIT_FAILURE);
 			}
-			glovar.arg = _strtoky(NULL, " \t\n");
-			f(&glovar.head, glovar.cont);
+			vglo.arg = _strtoky(NULL, " \t\n");
+			f(&vglo.head, vglo.cont);
 		}
-		
+		nlines = getline(&vglo.buffer, &size, fd);
+		vglo.cont++;
 	}
 
 	free_vglo();
